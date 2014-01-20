@@ -1,4 +1,5 @@
 simple sample, taken from pseudo code on stack overflow
+it only works on ints
 See this [link on stackoverflow](http://stackoverflow.com/questions/17063753/can-someone-explain-this-miller-rabin-primality-test-pseudo-code-in-simple-terms)
 for the details
 

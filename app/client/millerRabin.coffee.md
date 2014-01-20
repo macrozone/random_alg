@@ -8,11 +8,14 @@
 	chart = null
 	candidate = null
 	candidate_minus_1 = null
+	cumulatedRuntime = 0
 
 
 	RESULT_COMPOSITE = 0
 	RESULT_PROBABLY_PRIME = 1
 
+
+	getTime = -> new Date().getTime()
 
 	initWithStringCandidate = (aString) ->
 		initWithCandidate BigInt.str2bigInt aString,BASE
@@ -20,6 +23,8 @@
 	initWithCandidate = (n)->
 		chart.series[0].setData []
 		chart.series[1].setData []
+		chart.series[2].setData []
+		cumulatedRuntime = 0
 		steps = 0
 		candidate = n
 		candidate_minus_1 = BigInt.addInt candidate, -1
@@ -45,7 +50,11 @@ from and to are bigInts too
 		steps++
 		a = bigIntRandBetween BIG_INT_2, candidate_minus_1
 
+		startTime = getTime()
 		result = BigInt.millerRabin candidate,a
+		endTime = getTime()
+		runtime = endTime - startTime
+		cumulatedRuntime += runtime
 		switch result
 			when RESULT_COMPOSITE 
 				resultText = "composite"
@@ -58,6 +67,8 @@ from and to are bigInts too
 		$(template.find(".result")).text resultText
 		
 		chart.series[0].addPoint probabilityForComposite
+		chart.series[1].addPoint runtime
+		chart.series[2].addPoint cumulatedRuntime
 
 
 
@@ -78,15 +89,17 @@ from and to are bigInts too
 				minorTickInterval: 0.1
 				title:
 					text: "n"
-			yAxis:
-
-			#	type: "logarithmic"
-				title:
-					text: "time taken in ms"
+			yAxis: [ 
+				(opposite: true, title: text: "probability")
+				(title: text: "time taken in ms")
+				]
+				
+					
 		chart = $chart.highcharts()
 
-		chart.addSeries name: "probability of composite", data:[]
-		chart.addSeries name: "runtime", data:[]
+		chart.addSeries name: "probability of composite", data:[],yAxis:0
+		chart.addSeries name: "runtime", data:[],yAxis:1
+		chart.addSeries name: "cumulated runtime", data:[],yAxis:1
 
 
 	Template.millerRabin.rendered = ->
