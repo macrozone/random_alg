@@ -1,10 +1,10 @@
 	
 ### Helpers
 
-
-
 	rand_between = (from,to) ->
 		Math.random() * (to - from) + from
+
+	Log: _.bind console.log, console
 
 ### PI
 approx pi
@@ -19,25 +19,23 @@ approx pi
 		return 4 * inside / n
 
 
-	approx_pi_stepwise = (callback) ->
-		steps = 0
-		inside = 0
+	approx_pi_stepwise = (context) ->
+		context = _.defaults context, callback: Log, steps: 0, inside: 0
 		round = ->
-			steps++
+			context.steps++
 			x = Math.random()
 			y = Math.random()
 			if x*x+y*y <=1
-				inside++
+				context.inside++
 
-			pi = 4 * inside / steps
+			pi = 4 * context.inside / context.steps
 
-			running = callback(x,y,pi)
+			running = context.callback(x,y,pi)
 			if running then _.defer round
 
 		_.defer round
 
 ### Integrate
-
 
 	integrate = (f, from_x, to_x, from_y, to_y, n) ->
 		below = 0
@@ -47,12 +45,7 @@ approx pi
 			y = rand_between from_y, to_y
 			if y < f(x)
 				below++
-
 		return area * below / n
-
-			
-				
-
 
 
 

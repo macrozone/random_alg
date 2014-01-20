@@ -9,3 +9,5 @@ insecure
 preserve-inputs
 coffeescript
 stylus
+bootstrap-3
+highcharts
