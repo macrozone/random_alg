@@ -6,13 +6,34 @@
 		</div>
 		<div class="panel-body">
 			<textarea class="candidate"></textarea>
-			<p class="victim"></p>
-			<p class="result"></p>
-			<br />
+			
 			<button class="btn step">step</button>
-			<div class="chart"></div>
+			
+
+		
+			<div class="row">
+			<div class="col-sm-5">
+				{{>millerRabinStats}}
+			</div>
+			<div class="col-sm-7">
+		
+			{{>millerRabinChart}}
+			</div>
+
+			<p><a target="_blank" href="http://primes.utm.edu/curios/page.php?number_id=9494">long primes</a></p>
+
 		</div>
 	</div>
 </template>
 
+<template name="millerRabinStats">
+	<dl class="dl-horizontal">
+	<dt>length of candidate:</dt><dd>{{candidateLength}}</dd>
+	<dt>Victim to test: </dt><dd class="victim">{{victim}}</dd>
+	<dt>Probability of composite:</dt><dd>{{probabilityForComposite}}</dd>
+	</dl>
+</template>
 
+<template name="millerRabinChart">
+	<div class="chart"></div>
+</template>
