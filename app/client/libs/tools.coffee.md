@@ -20,20 +20,24 @@ approx pi
 
 
 	approx_pi_stepwise = (context) ->
-		context = _.defaults context, callback: Log, steps: 0, inside: 0
+		context = _.defaults context, callback: Log, steps: 0, inside: 0, roundsPerInterval: 10
 		round = ->
 			context.steps++
 			x = Math.random()
 			y = Math.random()
 			if x*x+y*y <=1
 				context.inside++
-
 			pi = 4 * context.inside / context.steps
 
 			running = context.callback(x,y,pi)
-			if running then _.defer round
+			if running then doNextRound()
 
-		_.defer round
+		doNextRound = ->
+			if context.steps % context.roundsPerInterval == 0
+				_.defer round
+			else 
+				round()
+		round()
 
 ### Integrate
 
