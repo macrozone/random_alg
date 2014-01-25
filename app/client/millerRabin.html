@@ -2,14 +2,14 @@
 
 	<div class="millerRabin panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">Miller Rabin</h3>
+			<h3 class="panel-title">Experiment - Miller Rabin</h3>
 		</div>
 		<div class="panel-body">
 
-			<button class="btn btn-primary step"><span class="glyphicon glyphicon-step-forward"></span> Step</button>
+			{{>stepButton}}
 			<br />
 			<br />
-			
+			<p>Candidate to test:</p>
 			<textarea class="candidate"></textarea>
 			
 
@@ -34,9 +34,11 @@
 	<dt>length of candidate:</dt><dd>{{candidateLength}}</dd>
 	<dt>Tests done:</dt><dd>{{numberOfTests}}</dd>
 	<dt>latest runtime:</dt><dd>{{latestRuntime}}</dd>
+	<dt>total runtime:</dt><dd>{{cumulatedRuntime}}</dd>
 	<dt>Witness tested: </dt><dd class="witness">{{witness}}</dd>
 	<dt>Prob. of composite:</dt><dd>{{probabilityForComposite}}</dd>
 	<dt>Prob. of prime:</dt><dd>{{probabilityForPrime}}</dd>
+	<dt>Result:</dt><dd>{{latestResult}}</dd>
 	</dl>
 </template>
 

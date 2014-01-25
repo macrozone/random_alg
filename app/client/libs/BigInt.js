@@ -1507,6 +1507,8 @@ function mont_(x,y,n,np) {
 
 // export
 window.BigInt = {
+  greater: greater,
+  equals: equals,
   millerRabin: millerRabin,
   millerRabinInt: millerRabinInt,
   int2bigInt: int2bigInt,
@@ -1514,10 +1516,13 @@ window.BigInt = {
   bigInt2str:bigInt2str,
   randBigInt: randBigInt,
   mod: mod,
+  modInt: modInt,
   addInt: addInt,
   add: add,
   sub: sub,
-  bitSize: bitSize
+  mult: mult,
+  bitSize: bitSize,
+  squareMod_: squareMod_
 }
 
 

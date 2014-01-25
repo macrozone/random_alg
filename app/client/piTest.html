@@ -2,12 +2,17 @@
 
 	<div class="piTest panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">Buffonsches Nadelproblem</h3>
+			<h3 class="panel-title">Experiment - Buffonsches Nadelproblem</h3>
 		</div>
 		<div class="panel-body">
-			<button class="btn btn-primary start" ><span class="glyphicon glyphicon-step-forward"></span> start / stop</button><br />
-			<p class="steps"></p>
-			<p class="pi"></p>
+			{{>startStopButton}}
+			<br />
+			<dl class="dl-horizontal">
+			<dt>steps:</dt><dd class="steps"></dd>
+
+			<dt>Pi:</dt><dd class="pi"></dd>
+			
+		</dl>
 			<canvas width="200" height="200">
 
 			</canvas>

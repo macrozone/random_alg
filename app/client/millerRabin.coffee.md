@@ -14,12 +14,13 @@
 
 	RESULT_COMPOSITE = 0
 	RESULT_PROBABLY_PRIME = 1
-	Session.set "candidateString", ""
-	Session.set "latestResult", ""
-	Session.set "latestRuntime", ""
-	Session.set "victim", ""
-	Session.set "probabilityForComposite", ""
-	Session.set "steps", 0
+	Session.set "mr_candidateString", ""
+	Session.set "mr_latestResult", ""
+	Session.set "mr_latestRuntime", ""
+	Session.set "mr_cumulatedRuntime", ""
+	Session.set "mr_witness", ""
+	Session.set "mr_probabilityForComposite", ""
+	Session.set "mr_steps", 0
 
 	getTime = -> new Date().getTime()
 
@@ -35,12 +36,13 @@
 		cumulatedRuntime = 0
 		steps = 0
 		candidate = n
-		Session.set "candidateString", BigInt.bigInt2str n,BASE
-		Session.set "latestResult", ""
-		Session.set "latestRuntime", ""
-		Session.set "victim", ""
-		Session.set "probabilityForComposite", ""
-		Session.set "steps", 0
+		Session.set "mr_candidateString", BigInt.bigInt2str n,BASE
+		Session.set "mr_latestResult", ""
+		Session.set "mr_latestRuntime", ""
+		Session.set "mr_cumulatedRuntime", ""
+		Session.set "mr_witness", ""
+		Session.set "mr_probabilityForComposite", ""
+		Session.set "mr_steps", 0
 		candidate_minus_1 = BigInt.addInt candidate, -1
 
 	
@@ -52,18 +54,12 @@
 
 from and to are bigInts too
 
-	bigIntRandBetween = (from, to) ->
-
-		diff = BigInt.addInt(BigInt.sub(to, from),1)
-		bits = BigInt.bitSize diff
-		rand = BigInt.randBigInt bits
-		rand =  BigInt.mod rand, diff
-		return BigInt.add rand, from
+	
 
 
 	doStep = (event, template)->
 		steps++
-		a = bigIntRandBetween BIG_INT_2, candidate_minus_1
+		a = Tools.bigIntRandBetween BIG_INT_2, candidate_minus_1
 		
 		startTime = getTime()
 		result = BigInt.millerRabin candidate,a
@@ -77,12 +73,12 @@ from and to are bigInts too
 			when RESULT_PROBABLY_PRIME
 				resultText = "probablyPrime"
 				probabilityForComposite = probability steps
-
-		Session.set "latestRuntime", runtime
-		Session.set "latestResult", resultText
-		Session.set "victim", BigInt.bigInt2str a,BASE
-		Session.set "probabilityForComposite", probabilityForComposite
-		Session.set "steps", steps
+		Session.set "mr_cumulatedRuntime", cumulatedRuntime
+		Session.set "mr_latestRuntime", runtime
+		Session.set "mr_latestResult", resultText
+		Session.set "mr_witness", BigInt.bigInt2str a,BASE
+		Session.set "mr_probabilityForComposite", probabilityForComposite
+		Session.set "mr_steps", steps
 		chart.series[0].addPoint probabilityForComposite
 		chart.series[1].addPoint cumulatedRuntime
 
@@ -118,14 +114,19 @@ from and to are bigInts too
 		chart.addSeries name: "cumulated runtime", data:[],yAxis:0, color: COLOR_RUNTIME
 		#chart.addSeries name: "runtime", data:[],yAxis:1
 	
-	Template.millerRabinStats.latestRuntime = -> Session.get("latestRuntime")+"ms"
-	Template.millerRabinStats.numberOfTests = -> Session.get "steps"
-	Template.millerRabinStats.candidate = -> Session.get "candidateString"
-	Template.millerRabinStats.candidateLength = -> Session.get("candidateString")?.length
-	Template.millerRabinStats.victim = -> Session.get "victim"
-	Template.millerRabinStats.probabilityForComposite = -> Session.get "probabilityForComposite"
+	Template.millerRabin.sample = -> Samples["1000"]
+
+	Template.millerRabinStats.latestRuntime = -> Session.get("mr_latestRuntime")+"ms"
+	Template.millerRabinStats.cumulatedRuntime = -> Session.get("mr_cumulatedRuntime")+"ms"
+	Template.millerRabinStats.numberOfTests = -> Session.get "mr_steps"
+	Template.millerRabinStats.latestResult = -> Session.get "mr_latestResult"
+	Template.millerRabinStats.candidate = -> Session.get "mr_candidateString"
+	Template.millerRabinStats.candidateLength = -> Session.get("mr_candidateString")?.length
+	Template.millerRabinStats.witness = -> Session.get "mr_witness"
+	Template.millerRabinStats.probabilityForComposite = -> 100* (Session.get "mr_probabilityForComposite")+"%"
 	Template.millerRabinStats.probabilityForPrime = -> 
-		1 - Session.get "probabilityForComposite" if Session.get("probabilityForComposite") > 0
+		prob = 1 - Session.get "mr_probabilityForComposite" if Session.get("mr_probabilityForComposite") > 0
+		100* prob + "%"
 	Template.millerRabinChart.rendered = ->
 		initChart this
 

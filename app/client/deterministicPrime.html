@@ -1,0 +1,36 @@
+<template name="deterministicPrime">
+
+	<div class="deterministicPrime panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Experiment - Derministic Prime - runtime</h3>
+		</div>
+		<div class="panel-body">
+			
+	
+				{{>runButton}}
+				<br />
+				<br />
+			
+		<div class="row">
+		<div class="col-sm-6">
+		<p>Candidate to test:</p>
+		<textarea class="candidate"></textarea>
+		</div>
+		<div class="col-sm-6">
+			{{>primeStats}}
+			
+		</div>
+		
+	</div>
+</template>
+
+
+<template name="primeStats">
+	<dl class="dl-horizontal">
+	<dt>length of candidate:</dt><dd>{{candidateLength}}</dd>
+	
+	<dt>latest runtime:</dt><dd>{{latestRuntime}}</dd>
+	<dt>Result:</dt><dd>{{latestResult}}</dd>
+
+	</dl>
+</template>
