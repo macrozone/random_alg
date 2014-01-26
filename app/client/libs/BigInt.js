@@ -1522,7 +1522,8 @@ window.BigInt = {
   sub: sub,
   mult: mult,
   bitSize: bitSize,
-  squareMod_: squareMod_
+  squareMod_: squareMod_,
+  isZero: isZero
 }
 
 

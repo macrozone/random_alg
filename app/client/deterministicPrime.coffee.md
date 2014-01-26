@@ -16,7 +16,7 @@ and check if n can be divided through that number. If so, n is not a prime
 	BIG_INT_2 = BigInt.int2bigInt 2,1
 	BIG_INT_3 = BigInt.int2bigInt 3,1
 
-	isPrime1 = (n) ->
+	@isPrime1 = (n) ->
 		for i in [2..Math.sqrt n]
 			if n % i == 0
 				return false
@@ -28,7 +28,7 @@ slightly faster Implementation from
 http://stackoverflow.com/a/2385999/1463534
 
 
-	isPrime2 = (n) ->
+	@isPrime2 = (n) ->
 		if(n < 2) then return false
 		if(n == 2 || n == 3) then return true
 		if(n%2 == 0 || n%3 == 0) then return false
@@ -41,7 +41,7 @@ http://stackoverflow.com/a/2385999/1463534
 
 mainly the same algoritm as above, but with BigInt
 
-	isPrimeBigInt = (n) ->
+	@isPrimeBigInt = (n) ->
 		if BigInt.greater BIG_INT_2, n then return false
 		if BigInt.equals n, BIG_INT_2 or BigInt.equals n, BIG_INT_3 then return true
 		if BigInt.modInt(n,2) == 0 or BigInt.modInt(n,3) == 0 then return false
@@ -50,7 +50,8 @@ mainly the same algoritm as above, but with BigInt
 		while BigInt.greater n, (BigInt.mult i,i)
 			a = BigInt.mod n, (BigInt.addInt i,-1)
 			b = BigInt.mod n, (BigInt.addInt i,1)
-			if a == 0 or b == 0 then return false
+
+			if BigInt.isZero a or BigInt.isZero b then return false
 			i = BigInt.addInt i, 6
 
 		return true

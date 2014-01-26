@@ -48,8 +48,11 @@
 			result = BigInt.millerRabin candidate,a
 			endTime = getTime()
 			runtime = endTime - startTime
-			console.log result
-			@chart.series[0].addPoint [@n, runtime]
+		
+			@chart.series[0].addPoint 
+				x: @n 
+				y: runtime
+				name: "<strong>Number tested:</strong> <br />"+(Tools.chunkString BigInt.bigInt2str(a, 10),20).join("<br />")
 
 			@n += @nStep
 			if @running then _.delay turn,50
@@ -67,7 +70,6 @@
 	
 	Template.millerRabinRuntime.events = 
 		"click .start": (event, template) ->
-			console.log this, template
 			
 			startExperiment.call template.data
 
