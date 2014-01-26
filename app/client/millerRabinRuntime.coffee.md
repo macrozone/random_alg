@@ -3,9 +3,9 @@
 	COLOR_RUNTIME = "#89A54E"
 	BIG_INT_2 = BigInt.int2bigInt 2,1
 
-	initChart = (template)->
-		console.log template
-		$chart = $(template.find(".chart")).highcharts
+	initChart = ->
+
+		$chart = $(@find(".chart")).highcharts
 			chart:
 				height: 600
 				zoomType: 'x'
@@ -28,7 +28,7 @@
 		chart = $chart.highcharts()
 
 		chart.addSeries name: "runtime", data:[],color: COLOR_RUNTIME
-		template.data.chart = chart
+		@data.chart = chart
 	
 
 	getTime = -> new Date().getTime()
@@ -51,7 +51,7 @@
 		
 			@chart.series[0].addPoint 
 				x: @n 
-				y: runtime
+				y: runtime 
 				name: "<strong>Number tested:</strong> <br />"+(Tools.chunkString BigInt.bigInt2str(a, 10),20).join("<br />")
 
 			@n += @nStep
@@ -75,4 +75,5 @@
 
 	Template.millerRabinRuntime.rendered = ->
 		_.defaults @,data: steps: 0, n:10,nStep:10
-		initChart this
+		initChart.call this
+
