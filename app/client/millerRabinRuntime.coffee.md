@@ -7,7 +7,7 @@
 
 		$chart = $(@find(".chart")).highcharts
 			chart:
-				height: 600
+				height: 500
 				zoomType: 'x'
 			legend:
 				layout: "vertical"

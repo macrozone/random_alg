@@ -126,7 +126,7 @@ to compare, we have a n * log(n) graph, factor is more or less ranom, it may dif
 	initChart = ->
 		$chart = $(@find(".chart")).highcharts
 			chart:
-				height: 600
+				height: 500
 				zoomType: 'x'
 			legend:
 				layout: "vertical"
