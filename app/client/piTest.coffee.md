@@ -17,7 +17,7 @@ approx pi
 ### stepwise variant with callback to draw the result
 
 	approx_pi_stepwise = ->
-		_.defaults @, callback: Tools.log, steps: 0, inside: 0, roundsPerInterval: 10
+		_.defaults @, callback: Tools.log, steps: 0, inside: 0, roundsPerInterval: 1
 		round = =>
 			@steps++
 			x = Math.random()
