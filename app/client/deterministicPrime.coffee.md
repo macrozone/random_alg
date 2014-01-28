@@ -117,7 +117,7 @@ mainly the same algoritm as above, but with BigInt
 		Session.set "latestResult", resultText
 
 		
-
+	Template.samples.samples = ->@Samples
 	
 	Template.primeStats.candidate = -> Session.get "candidateString"
 	Template.primeStats.candidateLength = -> Session.get("candidateString")?.length
@@ -127,6 +127,9 @@ mainly the same algoritm as above, but with BigInt
 	
 	
 	Template.deterministicPrime.events = 
+		"change .samples": (event,template) ->
+			candidate = $(event.target).val()
+			$(template.find ".candidate").val candidate
 		"click .run": (event,template)->
 
 			runWithStringCandidate.call template.data, $(template.find(".candidate")).val()

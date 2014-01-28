@@ -64,7 +64,7 @@ from and to are bigInts too
 		startTime = getTime()
 		result = BigInt.millerRabin candidate,a
 		endTime = getTime()
-		runtime = endTime - startTime
+		runtime = Math.max 1, endTime - startTime
 		cumulatedRuntime += runtime
 		switch result
 			when RESULT_COMPOSITE 
@@ -114,7 +114,7 @@ from and to are bigInts too
 		chart.addSeries name: "cumulated runtime", data:[],yAxis:0, color: COLOR_RUNTIME
 		#chart.addSeries name: "runtime", data:[],yAxis:1
 	
-	Template.millerRabin.sample = -> Samples["1000"]
+	Template.samples.samples = ->@Samples
 
 	Template.millerRabinStats.latestRuntime = -> Session.get("mr_latestRuntime")+"ms"
 	Template.millerRabinStats.cumulatedRuntime = -> Session.get("mr_cumulatedRuntime")+"ms"
@@ -131,6 +131,10 @@ from and to are bigInts too
 		initChart this
 
 	Template.millerRabin.events = 
+		"change .samples": (event,template) ->
+			candidate = $(event.target).val()
+			$(template.find ".candidate").val candidate
+			initWithStringCandidate candidate
 		"click .step": doStep
 		"change .candidate": (event)->
 			initWithStringCandidate $(event.target).val()

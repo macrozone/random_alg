@@ -11,3 +11,12 @@
 <template name="startStopButton">
 	<button class="btn btn-primary start" ><span class="glyphicon glyphicon-step-forward"></span> Start / Stop</button>
 </template>
+
+<template name="samples">
+	<select class="samples">
+		<option value=""></option>
+		{{#each samples}}
+		<option value="{{n}}">{{label}}</option>
+		{{/each}}
+	</select>
+</template>
