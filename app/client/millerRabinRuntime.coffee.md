@@ -52,7 +52,7 @@
 			@chart.series[0].addPoint 
 				x: @n 
 				y: runtime 
-				name: "<strong>Number tested:</strong> <br />"+(Tools.chunkString BigInt.bigInt2str(a, 10),20).join("<br />")
+				#name: "<strong>Number tested:</strong> <br />"+(Tools.chunkString BigInt.bigInt2str(a, 10),20).join("<br />")
 
 			@n += @nStep
 			if @running then _.delay turn,50
